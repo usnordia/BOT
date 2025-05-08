@@ -1,0 +1,87 @@
+# bot.py - Portfolio Version (Generic Arbitrage Bot)
+import os
+import time
+import json
+from dotenv import load_dotenv
+from web3 import Web3
+from web3.middleware import geth_poa_middleware
+
+# === Load Config ===
+load_dotenv()
+
+RPC_URL = os.getenv("RPC_URL")
+PRIVATE_KEY = os.getenv("PRIVATE_KEY")
+WALLET = Web3.to_checksum_address(os.getenv("WALLET_ADDRESS"))
+CONTRACT_ADDRESS = Web3.to_checksum_address(os.getenv("CONTRACT_ADDRESS"))
+
+TOKENS = {
+    "TOKEN_A": Web3.to_checksum_address(os.getenv("TOKEN_A")),
+    "TOKEN_B": Web3.to_checksum_address(os.getenv("TOKEN_B")),
+    "TOKEN_C": Web3.to_checksum_address(os.getenv("TOKEN_C"))
+}
+
+MIN_PROFIT_USD = float(os.getenv("MIN_PROFIT_USD", 1.00))
+
+# === Web3 Setup ===
+w3 = Web3(Web3.HTTPProvider(RPC_URL))
+w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+
+# === Load Contract ===
+with open("abi/contract_abi.json") as f:
+    contract_abi = json.load(f)
+
+contract = w3.eth.contract(address=CONTRACT_ADDRESS, abi=contract_abi)
+
+# === Route Definitions ===
+ROUTES = [
+    {"label": "A→B→C→A", "tokens": ["TOKEN_A", "TOKEN_B", "TOKEN_C", "TOKEN_A"]},
+    {"label": "B→C→A→B", "tokens": ["TOKEN_B", "TOKEN_C", "TOKEN_A", "TOKEN_B"]}
+]
+
+# === Mock Price Function ===
+def get_token_price(symbol):
+    mock_prices = {
+        "TOKEN_A": 100.0,
+        "TOKEN_B": 1.00,
+        "TOKEN_C": 50000.0
+    }
+    return mock_prices.get(symbol, 0)
+
+# === Simulation Function ===
+def simulate_profit(path, amount):
+    try:
+        start_price = get_token_price(path[0])
+        end_price = get_token_price(path[-1])
+        return ((end_price - start_price) / start_price) * amount
+    except:
+        return -9999
+
+# === Execute Arbitrage Transaction ===
+def execute_trade(path, amount, min_profit_usd):
+    try:
+        nonce = w3.eth.get_transaction_count(WALLET)
+        txn = contract.functions.executeTriangularArbitrage(
+            *[TOKENS[t] for t in path[:3]],
+            int(amount),
+            int(min_profit_usd * 1e18),
+            True
+        ).build_transaction({
+            "from": WALLET,
+            "nonce": nonce,
+            "gas": 1_200_000,
+            "maxFeePerGas": int(w3.eth.gas_price * 1.2),
+            "maxPriorityFeePerGas": w3.to_wei("0.5", "gwei")
+        })
+        signed_tx = w3.eth.account.sign_transaction(txn, PRIVATE_KEY)
+        tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
+        print(f"✅ TX sent: {tx_hash.hex()}")
+    except Exception as e:
+        print(f"❌ Trade failed: {e}")
+
+# === Main Bot Loop ===
+if __name__ == "__main__":
+    print("🤖 Starting Generic Arbitrage Bot...")
+    while True:
+        best = {"profit": -float("inf"), "route": None, "amount": 100}
+        for route in ROUTES:
+            profit = simulate_profit(route["tokens"], best["]()_
