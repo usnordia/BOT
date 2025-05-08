@@ -26,11 +26,7 @@ This system:
 ## ⚙️ Core Features
 
 - 🧠 **AI-Augmented Strategy Layer**: LLMs (e.g., GPT) advise which routes to execute.
-- 📈 **Monte Carlo Simulator**: Evaluates probabilistic outcomes to filter risky paths.
-- 🔁 **Live Loop Execution**: Evaluates all supported arbitrage paths every 6 seconds.
-- 🧪 **Off-Chain Profit Simulation**: Fast pre-check before spending gas.
-- 🔐 **Smart Contract Execution**: Secure on-chain arbitrage settlement.
-- 💸 **Auto Funding & Sweeping**: Deposit tokens in and retrieve profits out.
+- - 🔐 **Smart Contract Execution**: Secure on-chain arbitrage settlement.
 
 ## 🚀 How to Use
 
