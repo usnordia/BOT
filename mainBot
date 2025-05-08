@@ -1,4 +1,7 @@
 # bot.py - Portfolio Version (Generic Arbitrage Bot)
+
+# Copyright Diane C. Norris, 2025
+
 import os
 import time
 import json
