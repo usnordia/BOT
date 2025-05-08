@@ -14,7 +14,7 @@ The Software is provided "as is", without warranty of any kind, express or impli
 
 ## 📘 Project Summary
 
-The **Bot** is an intelligent, AI-enhanced arbitrage trading system designed for the Arbitrum blockchain. It monitors price discrepancies between multiple DEXes (e.g., Uniswap, SushiSwap) and exploits triangular arbitrage opportunities across WETH, USDC, and WBTC tokens.
+The **Bot** is an intelligent, AI-enhanced arbitrage trading system designed for the Arbitrum blockchain. It monitors price discrepancies between multiple DEXes and exploits triangular arbitrage opportunities across tokens.
 
 This system:
 - Uses **real-time Web3 on-chain price data** and **off-chain pricing from Kraken**.
@@ -44,13 +44,6 @@ Create a .env file with:
 WALLET=0xYourWalletAddress
 PRIVATE_KEY=YourPrivateKey
 ARB_RPC_URL=https://your.rpc.url
-CONTRACT_ADDRESS=0xYourContract
-WETH=0xTokenAddr
-USDC=0xTokenAddr
-WBTC=0xTokenAddr
-UNI_ROUTER=0xRouterAddr
-SUSHI_ROUTER=0xRouterAddr
-MIN_PROFIT_USD=1.0
 ```
 ### 3. **Run the Bot**
 ```bash
