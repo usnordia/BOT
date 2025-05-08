@@ -1,11 +1,11 @@
 # BOT
 Bot for Quant Calculations
 
-# 🐢 Green Turtle Arbitrage Bot – Project Overview
+# Arbitrage Bot – Project Overview
 
 ## 📘 Project Summary
 
-The **Green Turtle Bot** is an intelligent, AI-enhanced arbitrage trading system designed for the Arbitrum blockchain. It monitors price discrepancies between multiple DEXes (e.g., Uniswap, SushiSwap) and exploits triangular arbitrage opportunities across WETH, USDC, and WBTC tokens.
+The **Bot** is an intelligent, AI-enhanced arbitrage trading system designed for the Arbitrum blockchain. It monitors price discrepancies between multiple DEXes (e.g., Uniswap, SushiSwap) and exploits triangular arbitrage opportunities across WETH, USDC, and WBTC tokens.
 
 This system:
 - Uses **real-time Web3 on-chain price data** and **off-chain pricing from Kraken**.
